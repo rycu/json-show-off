@@ -40,19 +40,28 @@ const getValueColumn = value =>
 
 const getArrayTableHead = feed => {
   let tableHead = `<tr><th style='${styles.header}'></th>`;
-  Object.keys(feed[0]).forEach(child => {
+  Object.keys(feed).forEach(child => {
     tableHead += `<th style='${styles.header}'>${child}</th>`;
   });
   return tableHead;
 };
 
+let lastTableHead;
+
 const getTableRow = (feed, child) => {
   if (Array.isArray(feed)) {
-    console.log(feed);
-    let arrayString = `<tr>${getValueColumn(child)}`;
-    const arrayNodes = [];
+    const tableHead = getArrayTableHead(feed[child]);
+
+    // console.log(Array.isArray(feed[child]));
+
+    let arrayString =
+      tableHead === lastTableHead || Array.isArray(feed[child])
+        ? ""
+        : tableHead;
+    lastTableHead = tableHead;
+
+    arrayString += `<tr>${getValueColumn(child)}`;
     Object.keys(feed[child]).forEach(node => {
-      arrayNodes.push(node);
       arrayString += `${getValueColumn(feed[child][node])}`;
     });
     arrayString += "<tr>";
@@ -64,18 +73,17 @@ const getTableRow = (feed, child) => {
 
 const buildTable = feed => {
   let stringzilla = getTablePrefix(feed);
-  if (Array.isArray(feed)) {
-    stringzilla += getArrayTableHead(feed);
-  }
   Object.keys(feed).forEach(child => {
     stringzilla += getTableRow(feed, child);
   });
   stringzilla += tableSuffix;
+  lastTableHead = "";
   return stringzilla;
 };
 
 document.write(`${buildTable(mockFeed)}`);
 
+// @TODO araays of arrays
 // @TODO Build Interface
 // @TODO Int/string highlighting
 // @TODO Obj/Array highlighting
