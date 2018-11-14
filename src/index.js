@@ -4,6 +4,7 @@ const styles = {
   table:
     "border-collapse: collapse; color:white; background-color:black; text-align:left; padding:6px;",
   column: "border:1px solid green; padding:10px;",
+  header: "border:1px solid green; padding:10px; font-weight:bold",
   caption: "font-size:smaller; text-align:centre; padding:4px 0;",
   key: "text-align:right; font-weight:bold;"
 };
@@ -27,20 +28,45 @@ const getCaption = feed => {
 
 const getTablePrefix = feed =>
   `<details open>${getCaption(feed)}<table style='${styles.table}'>`;
+
 const tableSuffix = "</table></details";
+
 const getValueColumn = value =>
   `<td style='${styles.column}'>${
     /* eslint-disable no-use-before-define */
     typeof value === "object" ? buildTable(value) : value
     /* eslint-enable no-use-before-define */
   }</td>`;
-const getTableRow = (feed, child) =>
-  `<tr><td style='${styles.column + styles.key}'>${child}</td>${getValueColumn(
-    feed[child]
-  )}</tr>`;
+
+const getArrayTableHead = feed => {
+  let tableHead = `<tr><th style='${styles.header}'></th>`;
+  Object.keys(feed[0]).forEach(child => {
+    tableHead += `<th style='${styles.header}'>${child}</th>`;
+  });
+  return tableHead;
+};
+
+const getTableRow = (feed, child) => {
+  if (Array.isArray(feed)) {
+    console.log(feed);
+    let arrayString = `<tr>${getValueColumn(child)}`;
+    const arrayNodes = [];
+    Object.keys(feed[child]).forEach(node => {
+      arrayNodes.push(node);
+      arrayString += `${getValueColumn(feed[child][node])}`;
+    });
+    arrayString += "<tr>";
+    return arrayString;
+  }
+  return `<tr><td style='${styles.column +
+    styles.key}'>${child}</td>${getValueColumn(feed[child])}</tr>`;
+};
 
 const buildTable = feed => {
   let stringzilla = getTablePrefix(feed);
+  if (Array.isArray(feed)) {
+    stringzilla += getArrayTableHead(feed);
+  }
   Object.keys(feed).forEach(child => {
     stringzilla += getTableRow(feed, child);
   });
@@ -54,5 +80,4 @@ document.write(`${buildTable(mockFeed)}`);
 // @TODO Int/string highlighting
 // @TODO Obj/Array highlighting
 // @TODO Handle empty objects/Arrays
-// @TODO Array Layout
 // @TODO time formating
