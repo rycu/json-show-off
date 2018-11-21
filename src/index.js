@@ -31,12 +31,13 @@ const getTablePrefix = feed =>
 
 const tableSuffix = "</table></details";
 
-const getValueColumn = value =>
-  `<td style='${styles.column}'>${
+const getValueColumn = value => {
+  return `<td style='${styles.column}'>${
     /* eslint-disable no-use-before-define */
     typeof value === "object" ? buildTable(value) : value
     /* eslint-enable no-use-before-define */
   }</td>`;
+};
 
 const getArrayTableHead = feed => {
   let tableHead = `<tr><th style='${styles.header}'></th>`;
@@ -52,18 +53,25 @@ const getTableRow = (feed, child) => {
   if (Array.isArray(feed)) {
     const tableHead = getArrayTableHead(feed[child]);
 
-    // console.log(Array.isArray(feed[child]));
-
     let arrayString =
-      tableHead === lastTableHead || Array.isArray(feed[child])
+      tableHead === lastTableHead ||
+      Array.isArray(feed[child]) ||
+      typeof feed[child] === "string"
         ? ""
         : tableHead;
     lastTableHead = tableHead;
 
     arrayString += `<tr>${getValueColumn(child)}`;
-    Object.keys(feed[child]).forEach(node => {
-      arrayString += `${getValueColumn(feed[child][node])}`;
-    });
+
+    console.log(feed[child]);
+
+    if (typeof feed[child] !== "object") {
+      arrayString += `${getValueColumn(feed[child])}`;
+    } else {
+      Object.keys(feed[child]).forEach(node => {
+        arrayString += `${getValueColumn(feed[child][node])}`;
+      });
+    }
     arrayString += "<tr>";
     return arrayString;
   }
@@ -83,7 +91,6 @@ const buildTable = feed => {
 
 document.write(`${buildTable(mockFeed)}`);
 
-// @TODO araays of arrays
 // @TODO Build Interface
 // @TODO Int/string highlighting
 // @TODO Obj/Array highlighting
