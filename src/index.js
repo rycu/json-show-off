@@ -1,40 +1,49 @@
 import mockFeed from "./mockFeed";
-
-const styles = {
-  table:
-    "border-collapse: collapse; color:white; background-color:black; text-align:left; padding:6px;",
-  column: "border:1px solid green; padding:10px;",
-  header: "border:1px solid green; padding:10px; font-weight:bold",
-  caption: "font-size:smaller; text-align:centre; padding:4px 0;",
-  key: "text-align:right; font-weight:bold;"
-};
+import styles from "./styles";
 
 const getCaption = feed => {
   const propCount = Object.keys(feed).length;
   if (Array.isArray(feed)) {
     const propLabel = propCount === 1 ? "item" : "items";
-    return `<summary style='${
-      styles.caption
-    }'>Array [${propCount} ${propLabel}]</summary>`;
+    return `<summary style='${styles.caption}'><span style='${
+      styles.captionPrefix
+    }'>Array</span><span style='${
+      styles.captionSuffix
+    }'> [${propCount} ${propLabel}]</span></summary>`;
   }
   if (typeof feed === "object") {
     const propLabel = propCount === 1 ? "property" : "properties";
-    return `<summary style='${
-      styles.caption
-    }'>Object {${propCount} ${propLabel}}</summary>`;
+    return `<summary style='${styles.caption}'><span style='${
+      styles.captionPrefix
+    }'>Object</span><span style='${
+      styles.captionSuffix
+    }'> {${propCount} ${propLabel}}</span></summary>`;
   }
   return `<summary style='${styles.caption}'>${typeof feed}</summary>`;
 };
 
-const getTablePrefix = feed =>
-  `<details open>${getCaption(feed)}<table style='${styles.table}'>`;
-
+const getTablePrefix = feed => {
+  const tableType = Array.isArray(feed) ? "array" : "object";
+  return `<details open>${getCaption(feed)}<table style='${styles[tableType] +
+    styles.table}'>`;
+};
 const tableSuffix = "</table></details";
+
+const getStyledType = value => {
+  const styledTags = {
+    string: `<span style='${styles.string}'>${value}</span>`,
+    number: `<span style='${styles.number}'>${value}</span>`,
+    boolean: `<span style='${
+      value ? styles.true : styles.false
+    }'>${value}</span>`
+  };
+  return styledTags[typeof value];
+};
 
 const getValueColumn = value => {
   return `<td style='${styles.column}'>${
     /* eslint-disable no-use-before-define */
-    typeof value === "object" ? buildTable(value) : value
+    typeof value === "object" ? buildTable(value) : getStyledType(value)
     /* eslint-enable no-use-before-define */
   }</td>`;
 };
@@ -63,8 +72,6 @@ const getTableRow = (feed, child) => {
 
     arrayString += `<tr>${getValueColumn(child)}`;
 
-    console.log(feed[child]);
-
     if (typeof feed[child] !== "object") {
       arrayString += `${getValueColumn(feed[child])}`;
     } else {
@@ -91,8 +98,5 @@ const buildTable = feed => {
 
 document.write(`${buildTable(mockFeed)}`);
 
-// @TODO Build Interface
-// @TODO Int/string highlighting
-// @TODO Obj/Array highlighting
 // @TODO Handle empty objects/Arrays
 // @TODO time formating
