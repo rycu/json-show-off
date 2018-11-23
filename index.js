@@ -1,47 +1,52 @@
 import { settings, styles } from "./config";
 
+let inlineStyles;
+let displaySettings;
+
 const getCaption = feed => {
   const propCount = Object.keys(feed).length;
   if (Array.isArray(feed)) {
     const propLabel = propCount === 1 ? "item" : "items";
-    return `<summary style='${styles.caption}'><span style='${
-      styles.captionPrefix
+    return `<summary style='${inlineStyles.caption}'><span style='${
+      inlineStyles.captionPrefix
     }'>Array</span><span style='${
-      styles.captionSuffix
+      inlineStyles.captionSuffix
     }'> [${propCount} ${propLabel}]</span></summary>`;
   }
   if (typeof feed === "object") {
     const propLabel = propCount === 1 ? "property" : "properties";
-    return `<summary style='${styles.caption}'><span style='${
-      styles.captionPrefix
+    return `<summary style='${inlineStyles.caption}'><span style='${
+      inlineStyles.captionPrefix
     }'>Object</span><span style='${
-      styles.captionSuffix
+      inlineStyles.captionSuffix
     }'> {${propCount} ${propLabel}}</span></summary>`;
   }
-  return `<summary style='${styles.caption}'>${typeof feed}</summary>`;
+  return `<summary style='${inlineStyles.caption}'>${typeof feed}</summary>`;
 };
 
 const getTablePrefix = feed => {
   const tableType = Array.isArray(feed) ? "array" : "object";
-  return `<details style='${styles.details}' ${settings.expandOnLoad &&
-    "open"}>${getCaption(feed)}<table style='${styles[tableType] +
-    styles.table}'>`;
+  return `<details style='${
+    inlineStyles.details
+  }' ${displaySettings.expandOnLoad && "open"}>${getCaption(
+    feed
+  )}<table style='${inlineStyles[tableType] + inlineStyles.table}'>`;
 };
 const tableSuffix = "</table></details";
 
 const getStyledType = value => {
   const styledTags = {
-    string: `<span style='${styles.string}'>${value}</span>`,
-    number: `<span style='${styles.number}'>${value}</span>`,
+    string: `<span style='${inlineStyles.string}'>${value}</span>`,
+    number: `<span style='${inlineStyles.number}'>${value}</span>`,
     boolean: `<span style='${
-      value ? styles.true : styles.false
+      value ? inlineStyles.true : inlineStyles.false
     }'>${value}</span>`
   };
   return styledTags[typeof value];
 };
 
 const getValueColumn = value =>
-  `<td style='${styles.column}'>${
+  `<td style='${inlineStyles.column}'>${
     /* eslint-disable no-use-before-define */
     typeof value === "object" ? buildTable(value) : getStyledType(value)
     /* eslint-enable no-use-before-define */
@@ -49,10 +54,10 @@ const getValueColumn = value =>
 
 const getArrayTableHead = feed => {
   let tableHead = Object.keys(feed).length
-    ? `<tr><th style='${styles.header}'></th>`
+    ? `<tr><th style='${inlineStyles.header}'></th>`
     : "";
   Object.keys(feed).forEach(child => {
-    tableHead += `<th style='${styles.header}'>${child}</th>`;
+    tableHead += `<th style='${inlineStyles.header}'>${child}</th>`;
   });
   return tableHead;
 };
@@ -60,7 +65,12 @@ const getArrayTableHead = feed => {
 let previousTableHead;
 
 const getTableRow = (feed, child) => {
-  if (Array.isArray(feed)) {
+  console.log(
+    "displaySettings.horizontalArrayView: ",
+    displaySettings.horizontalArrayView
+  );
+
+  if (Array.isArray(feed) && displaySettings.horizontalArrayView) {
     const tableHead = getArrayTableHead(feed[child]);
 
     let arrayString =
@@ -71,8 +81,8 @@ const getTableRow = (feed, child) => {
         : tableHead;
     previousTableHead = tableHead;
 
-    arrayString += `<tr><td style='${styles.column +
-      styles.key}'>${child}</td>`;
+    arrayString += `<tr><td style='${inlineStyles.column +
+      inlineStyles.key}'>${child}</td>`;
 
     if (typeof feed[child] !== "object") {
       arrayString += `${getValueColumn(feed[child])}`;
@@ -84,8 +94,8 @@ const getTableRow = (feed, child) => {
     arrayString += "<tr>";
     return arrayString;
   }
-  return `<tr><td style='${styles.column +
-    styles.key}'>${child}</td>${getValueColumn(feed[child])}</tr>`;
+  return `<tr><td style='${inlineStyles.column +
+    inlineStyles.key}'>${child}</td>${getValueColumn(feed[child])}</tr>`;
 };
 
 const buildTable = feed => {
@@ -98,6 +108,12 @@ const buildTable = feed => {
   return stringzilla;
 };
 
-export default buildTable;
+const showOff = (feed, customStyles, customSettings) => {
+  inlineStyles = { ...styles, ...customStyles };
+  displaySettings = { ...settings, ...customSettings };
+  return buildTable(feed);
+};
+
+export default showOff;
 
 // @TODO Generate Key

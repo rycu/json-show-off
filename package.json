@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "webpack-dev-server --mode development --open 'Google Chrome' --contentBase './dist'"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rycu/show-off.git"
   },
-  "author": "rycu",
+  "author": "Ryan Cutter",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rycu/show-off/issues"
@@ -22,10 +19,6 @@
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "prettier": "^1.15.2",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
-  },
-  "dependencies": {}
+    "prettier": "^1.15.2"
+  }
 }
