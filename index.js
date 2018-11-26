@@ -65,11 +65,6 @@ const getArrayTableHead = feed => {
 let previousTableHead;
 
 const getTableRow = (feed, child) => {
-  console.log(
-    "displaySettings.horizontalArrayView: ",
-    displaySettings.horizontalArrayView
-  );
-
   if (Array.isArray(feed) && displaySettings.horizontalArrayView) {
     const tableHead = getArrayTableHead(feed[child]);
 
