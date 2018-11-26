@@ -1,18 +1,18 @@
 {
-  "name": "show-off",
+  "name": "json-show-off",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rycu/show-off.git"
+    "url": "git+https://github.com/rycu/json-show-off.git"
   },
   "author": "Ryan Cutter",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rycu/show-off/issues"
+    "url": "https://github.com/rycu/json-show-off/issues"
   },
-  "homepage": "https://github.com/rycu/show-off#readme",
+  "homepage": "https://github.com/rycu/json-show-off#readme",
   "devDependencies": {
     "eslint": "^5.8.0",
     "eslint-config-airbnb-base": "^13.1.0",
