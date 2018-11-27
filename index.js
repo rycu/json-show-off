@@ -3,6 +3,7 @@ import { settings, styles } from "./config";
 let inlineStyles;
 let displaySettings;
 
+// Creates the caption text above every object
 const getCaption = feed => {
   const propCount = Object.keys(feed).length;
   if (Array.isArray(feed)) {
@@ -24,6 +25,7 @@ const getCaption = feed => {
   return `<summary style='${inlineStyles.caption}'>${typeof feed}</summary>`;
 };
 
+// Opening tags for tables
 const getTablePrefix = feed => {
   const tableType = Array.isArray(feed) ? "array" : "object";
   return `<details style='${
@@ -32,8 +34,10 @@ const getTablePrefix = feed => {
     feed
   )}<table style='${inlineStyles[tableType] + inlineStyles.table}'>`;
 };
+// Closing tags for tables
 const tableSuffix = "</table></details";
 
+// creates a span value by type
 const getStyledType = value => {
   const styledTags = {
     string: `<span style='${inlineStyles.string}'>${value}</span>`,
@@ -45,6 +49,7 @@ const getStyledType = value => {
   return styledTags[typeof value];
 };
 
+// Creates new column
 const getValueColumn = value =>
   `<td style='${inlineStyles.column}'>${
     /* eslint-disable no-use-before-define */
@@ -52,6 +57,7 @@ const getValueColumn = value =>
     /* eslint-enable no-use-before-define */
   }</td>`;
 
+// Creates Table Head
 const getArrayTableHead = feed => {
   let tableHead = Object.keys(feed).length
     ? `<tr><th style='${inlineStyles.header}'></th>`
@@ -64,11 +70,14 @@ const getArrayTableHead = feed => {
 
 let previousTableHead;
 
+// Creates new row
 const getTableRow = (feed, child) => {
+  // Arrays are handled differently by default
   if (Array.isArray(feed) && displaySettings.horizontalArrayView) {
     const tableHead = getArrayTableHead(feed[child]);
 
     let arrayString =
+      // skip dulicate table headings
       tableHead === previousTableHead ||
       Array.isArray(feed[child]) ||
       typeof feed[child] === "string"
@@ -80,8 +89,10 @@ const getTableRow = (feed, child) => {
       inlineStyles.key}'>${child}</td>`;
 
     if (typeof feed[child] !== "object") {
+      // create Column for a value
       arrayString += `${getValueColumn(feed[child])}`;
     } else {
+      // create Column for each value
       Object.keys(feed[child]).forEach(node => {
         arrayString += `${getValueColumn(feed[child][node])}`;
       });
@@ -89,10 +100,12 @@ const getTableRow = (feed, child) => {
     arrayString += "<tr>";
     return arrayString;
   }
+  // handle non arrays
   return `<tr><td style='${inlineStyles.column +
     inlineStyles.key}'>${child}</td>${getValueColumn(feed[child])}</tr>`;
 };
 
+// Creates new table
 const buildTable = feed => {
   let stringzilla = getTablePrefix(feed);
   Object.keys(feed).forEach(child => {
@@ -104,6 +117,7 @@ const buildTable = feed => {
 };
 
 const showOff = (feed, customStyles, customSettings) => {
+  // add any custom styles or settings to the defaults.
   inlineStyles = { ...styles, ...customStyles };
   displaySettings = { ...settings, ...customSettings };
   return buildTable(feed);
@@ -112,3 +126,5 @@ const showOff = (feed, customStyles, customSettings) => {
 export default showOff;
 
 // @TODO Generate Key
+// @TODO url to links
+// @TODO render pics
