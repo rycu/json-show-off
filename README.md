@@ -1,5 +1,5 @@
 # json-show-off 🕺
-![gzipped size](https://img.shields.io/bundlephobia/minzip/react.svg)   ![dependencies](https://img.shields.io/badge/dependencies-0-green.svg)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![gzipped size](https://img.shields.io/bundlephobia/minzip/json-show-off.svg)   ![dependencies](https://img.shields.io/badge/dependencies-0-green.svg)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 
