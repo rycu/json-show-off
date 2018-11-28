@@ -12,6 +12,7 @@ export const styles = {
   number: "color:#AD83FE;",
   true: "color:#AD83FE;",
   false: "color:#AD83FE;",
+  null: "color:#AD83FE;",
   array: "background-color:#2F2F2F;",
   object: "background-color:#222;"
 };

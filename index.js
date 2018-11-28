@@ -44,7 +44,8 @@ const getStyledType = value => {
     number: `<span style='${inlineStyles.number}'>${value}</span>`,
     boolean: `<span style='${
       value ? inlineStyles.true : inlineStyles.false
-    }'>${value}</span>`
+    }'>${value}</span>`,
+    object: `<span style='${inlineStyles.null}'>${value}</span>`
   };
   return styledTags[typeof value];
 };
@@ -53,7 +54,9 @@ const getStyledType = value => {
 const getValueColumn = value =>
   `<td style='${inlineStyles.column}'>${
     /* eslint-disable no-use-before-define */
-    typeof value === "object" ? buildTable(value) : getStyledType(value)
+    typeof value === "object" && value !== null
+      ? buildTable(value)
+      : getStyledType(value)
     /* eslint-enable no-use-before-define */
   }</td>`;
 
