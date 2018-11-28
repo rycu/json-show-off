@@ -3,9 +3,9 @@
 
 ## Generate self sufficient html table snippets from json objects
 
-It turns out that not everybody enjoys trawling thorough json as a way of absorbing data.  Who knew 🤷‍.
+It turns out that not everybody enjoys trawling thorough json as a way of absorbing data.
 
-So json-show-off takes a json object and returns nested html tables with some sugar. 
+json-show-off takes a json object and returns nested html tables with some sugar. 
 
 ## Installation
 ```sh
@@ -117,6 +117,13 @@ jsonObject =  {
   ]
 };
 
-showOff(jsonObject);
+document.write(showOff(showOff));
 ```
 
+### Rendered Output
+
+![Example of Rendered Output](../assets/renderedOutputExample.png?raw=true)
+
+## License
+
+json-show-off is licensed as MIT.
