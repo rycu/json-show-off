@@ -35,7 +35,7 @@ const getTablePrefix = feed => {
   )}<table style='${inlineStyles[tableType] + inlineStyles.table}'>`;
 };
 // Closing tags for tables
-const tableSuffix = "</table></details";
+const tableSuffix = "</table></details>";
 
 // creates a span value by type
 const getStyledType = value => {
