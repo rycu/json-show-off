@@ -1,7 +1,7 @@
 {
   "name": "json-show-off",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.3",
+  "description": "Generate self sufficient html table snippets from json objects",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -14,11 +14,17 @@
   },
   "homepage": "https://github.com/rycu/json-show-off#readme",
   "devDependencies": {
-    "eslint": "^5.8.0",
+    "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "prettier": "^1.15.2"
-  }
+    "prettier": "^1.15.3"
+  },
+  "keywords": [
+    "json",
+    "html",
+    "table",
+    "viewer"
+  ]
 }

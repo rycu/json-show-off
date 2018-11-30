@@ -39,6 +39,25 @@ const tableSuffix = "</table></details>";
 
 // creates a span value by type
 const getStyledType = value => {
+  if (typeof value === "string") {
+    if (value.startsWith("https://") || value.startsWith("http://")) {
+      if (
+        (displaySettings.displayImages && value.endsWith("jpg")) ||
+        value.endsWith("jepg") ||
+        value.endsWith("png") ||
+        value.endsWith("gif") ||
+        value.endsWith("bmp")
+      ) {
+        return `<img style='${inlineStyles.img}' src='${value}'/>`;
+      }
+      if (displaySettings.displayLinks) {
+        return `<a style='${
+          inlineStyles.link
+        }' href='${value}' target="_blank" rel="noreferrer" rel="noopener">${value}</a>`;
+      }
+    }
+  }
+
   const styledTags = {
     string: `<span style='${inlineStyles.string}'>${value}</span>`,
     number: `<span style='${inlineStyles.number}'>${value}</span>`,
@@ -47,6 +66,7 @@ const getStyledType = value => {
     }'>${value}</span>`,
     object: `<span style='${inlineStyles.null}'>${value}</span>`
   };
+
   return styledTags[typeof value];
 };
 

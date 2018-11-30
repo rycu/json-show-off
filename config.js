@@ -14,10 +14,14 @@ export const styles = {
   false: "color:#AD83FE;",
   null: "color:#AD83FE;",
   array: "background-color:#2F2F2F;",
-  object: "background-color:#222;"
+  object: "background-color:#222;",
+  link: "color: #5ECBEE;",
+  img: "max-height: 8em; max-width: 8em;"
 };
 
 export const settings = {
   expandOnLoad: true,
-  horizontalArrayView: true
+  horizontalArrayView: true,
+  displayLinks: false,
+  displayImages: false
 };

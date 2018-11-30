@@ -1,8 +1,6 @@
 # json-show-off 🕺
 ![gzipped size](https://img.shields.io/bundlephobia/minzip/json-show-off.svg)   ![dependencies](https://img.shields.io/badge/dependencies-0-green.svg)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-
-
 ## Generate self sufficient html table snippets from json objects
 
 It turns out that not everybody enjoys trawling thorough json as a way of absorbing data.
@@ -45,7 +43,7 @@ showOff(jsonObject, customStyles);
 ```
 
 ### Default Styles
-Any off this keys below can be overridden with valid css 
+Any off the keys below can be overridden with valid css 
 ```js
 {
   details: "text-indent:6px; font-family: Arial;",
@@ -58,10 +56,13 @@ Any off this keys below can be overridden with valid css
   key: "text-align:right; font-weight:bold; color:white;",
   object: "background-color:#222;",
   array: "background-color:#2F2F2F;",
+  null: "color:#AD83FE;",
   string: "color:#FBF670;",
   number: "color:#AD83FE;",
   true: "color:#AD83FE;",
-  false: "color:#AD83FE;"
+  false: "color:#AD83FE;",
+  link: "color: #5ECBEE;",
+  img: "max-height: 8em; max-width: 8em;"
 }
 ```
 
