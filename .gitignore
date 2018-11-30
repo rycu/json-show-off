@@ -1,2 +1,4 @@
 node_modules/
 .vscode/
+yarn.lock
+.eslintrc.js

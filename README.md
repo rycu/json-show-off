@@ -82,7 +82,9 @@ showOff(jsonObject, null, customSettings);
 ```js
 {
   expandOnLoad: true,
-  horizontalArrayView: true
+  horizontalArrayView: true,
+  displayLinks: false,
+  displayImages: false
 }
 ```
 ## Example
