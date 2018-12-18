@@ -28,14 +28,24 @@ const getCaption = feed => {
 // Opening tags for tables
 const getTablePrefix = feed => {
   const tableType = Array.isArray(feed) ? "array" : "object";
+  return `<table style='${inlineStyles[tableType] + inlineStyles.table}'>`;
+};
+// Closing tags for tables
+const tableSuffix = "</table>";
+
+
+// Opening details tag
+const getDetailsPrefix = feed => {
+  const tableType = Array.isArray(feed) ? "array" : "object";
   return `<details style='${
     inlineStyles.details
   }' ${displaySettings.expandOnLoad && "open"}>${getCaption(
     feed
-  )}<table style='${inlineStyles[tableType] + inlineStyles.table}'>`;
+  )}`;
 };
-// Closing tags for tables
-const tableSuffix = "</table></details>";
+// Closing details tag
+const detailsSuffix = "</details>";
+
 
 // creates a span value by type
 const getStyledType = value => {
@@ -100,12 +110,13 @@ const getTableRow = (feed, child) => {
     const tableHead = getArrayTableHead(feed[child]);
 
     let arrayString =
-      // skip dulicate table headings
+      // skip duplicate table headings
       tableHead === previousTableHead ||
       Array.isArray(feed[child]) ||
       typeof feed[child] === "string"
         ? ""
         : tableHead;
+    
     previousTableHead = tableHead;
 
     arrayString += `<tr><td style='${inlineStyles.column +
@@ -130,12 +141,18 @@ const getTableRow = (feed, child) => {
 
 // Creates new table
 const buildTable = feed => {
-  let stringzilla = getTablePrefix(feed);
+  let stringzilla = '';
+  if(!displaySettings.hideObjectDetails){
+    stringzilla +=getDetailsPrefix(feed);
+  }
+  stringzilla += getTablePrefix(feed);
   Object.keys(feed).forEach(child => {
     stringzilla += getTableRow(feed, child);
   });
   stringzilla += tableSuffix;
-  previousTableHead = "";
+  if(!displaySettings.hideObjectDetails){
+    stringzilla += detailsSuffix;
+  }
   return stringzilla;
 };
 
@@ -147,7 +164,3 @@ const showOff = (feed, customStyles, customSettings) => {
 };
 
 export default showOff;
-
-// @TODO Generate Key
-// @TODO url to links
-// @TODO render pics

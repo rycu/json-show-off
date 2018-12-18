@@ -47,7 +47,7 @@ Any off the keys below can be overridden with valid css
 ```js
 {
   details: "text-indent:6px; font-family: Arial;",
-  table: "border-collapse: collapse; color:white; text-align:left; padding:6px;",
+  table: "font-family: Arial; border-collapse: collapse; color:white; text-align:left; padding:6px;",
   column: "border:1px solid #555; padding:10px;",
   header: "border:1px solid #555; padding:10px; font-weight:bold;",
   caption: "font-size:smaller; text-align:centre; padding:4px 0; color:white",
@@ -84,7 +84,8 @@ showOff(jsonObject, null, customSettings);
   expandOnLoad: true,
   horizontalArrayView: true,
   displayLinks: false,
-  displayImages: false
+  displayImages: false,
+  hideObjectDetails: false,
 }
 ```
 ## Example

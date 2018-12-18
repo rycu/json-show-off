@@ -1,7 +1,7 @@
 export const styles = {
   details: "text-indent:6px; font-family: Arial;",
   table:
-    "text-indent:0px; border-collapse: collapse; color:white; text-align:left; padding:6px;",
+    "text-indent:0px; border-collapse: collapse; color:white; text-align:left; padding:6px; font-family: Arial;",
   column: "border:1px solid #555; padding:10px;",
   header: "border:1px solid #555; padding:10px; font-weight:bold;",
   caption: "font-size:smaller; text-align:centre; padding:4px 0; color:white",
@@ -23,5 +23,6 @@ export const settings = {
   expandOnLoad: true,
   horizontalArrayView: true,
   displayLinks: false,
-  displayImages: false
+  displayImages: false,
+  hideObjectDetails: false,
 };
